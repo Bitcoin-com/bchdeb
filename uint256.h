@@ -123,6 +123,9 @@ class uint256 : public base_blob<256> {
 public:
     uint256() {}
     explicit uint256(const std::vector<unsigned char>& vch) : base_blob<256>(vch) {}
+    explicit uint256(uint64_t i) {
+        WriteLE64(data, i);
+    }
 
     /** A cheap hash function that just returns 64 bits from the result, it can be
      * used when the contents are considered uniformly random. It is not appropriate
@@ -132,6 +135,12 @@ public:
     uint64_t GetCheapHash() const
     {
         return ReadLE64(data);
+    }
+
+    friend inline uint256 operator^(const uint256& a, const uint256& b) {
+        uint256 r;
+        for (int i = 0; i < WIDTH; ++i) r.data[i] = a.data[i] ^ b.data[i];
+        return r;
     }
 };
 
