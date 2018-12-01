@@ -1,4 +1,4 @@
-# btcdeb
+# bchdeb
 
 Bitcoin Script debugging utilities.
 
